@@ -1,5 +1,6 @@
 package com.example.demo.di
 
+import android.content.SharedPreferences
 import com.example.demo.api.apiservice.ApiService
 import com.example.demo.api.datasource.HomeDataSource
 import com.example.demo.repository.HomeRepository
@@ -36,7 +37,7 @@ object HomeModule {
 
     @ActivityScoped
     @Provides
-    fun provideHomeViewModel(homeRepository: HomeRepository): HomeViewModel {
-        return HomeViewModel(homeRepository)
+    fun provideHomeViewModel(sharedPreferences: SharedPreferences, homeRepository: HomeRepository): HomeViewModel {
+        return HomeViewModel(sharedPreferences, homeRepository)
     }
 }

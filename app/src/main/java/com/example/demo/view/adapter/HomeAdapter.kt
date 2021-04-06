@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.demo.R
 import com.example.demo.model.response.Product
 
-class HomeAdapter (var users: List<Product>, private val listener: OnItemClickListener) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter (private var users: List<Product>, private val listener: OnItemClickListener) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     class HomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(product: Product, listener: OnItemClickListener) {

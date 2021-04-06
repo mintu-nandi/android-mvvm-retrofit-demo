@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.demo.api.status.Result
 import com.example.demo.R
 import com.example.demo.model.request.UserCredential
@@ -16,10 +15,8 @@ import com.example.demo.util.SharedPreferencesUtil.token
 import com.example.demo.util.SharedPreferencesUtil.username
 import com.example.demo.util.toast
 import com.example.demo.viewmodel.AuthenticationViewModel
-import com.example.demo.viewmodel.factory.VMAuthenticationFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
-import javax.inject.Inject
 
 /**
  * A login screen that offers login via email/password.
@@ -81,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateData(data: UserSession) {
-        SharedPreferencesUtil.sharedPreference(this).username = "Hello ${et_name.text.toString()}!"
+        SharedPreferencesUtil.sharedPreference(this).username = "Hello ${et_name.text}!"
         SharedPreferencesUtil.sharedPreference(this).token = data.session.token
         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
         finish()

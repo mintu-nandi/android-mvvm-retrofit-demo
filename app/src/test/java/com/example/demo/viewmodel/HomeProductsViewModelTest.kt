@@ -1,6 +1,6 @@
 package com.example.demo.viewmodel
 
-import android.app.Application
+import android.content.SharedPreferences
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.demo.util.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,12 +32,12 @@ class HomeProductsViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @RelaxedMockK
-    private lateinit var application: Application
-
-    @RelaxedMockK
     private lateinit var apiService: ApiService
 
     private lateinit var mainViewModel: HomeViewModel
+
+    @RelaxedMockK
+    private lateinit var sharedPreferences: SharedPreferences
 
     @MockK
     private lateinit var mainDataSource: HomeDataSource
@@ -52,7 +52,7 @@ class HomeProductsViewModelTest {
         MockKAnnotations.init(this)
         mainDataSource =  spyk(HomeDataSource(apiService))
         mainRepository = spyk(HomeRepository(mainDataSource))
-        mainViewModel = HomeViewModel(mainRepository)
+        mainViewModel = HomeViewModel(sharedPreferences, mainRepository)
     }
 
     @Test
@@ -61,7 +61,7 @@ class HomeProductsViewModelTest {
             mainViewModel.getInvestorProducts().observeForever(apiUserObserver)
             coEvery { mainRepository.getInvestorProducts("Bearer ") } returns Result.Loading
 
-            mainViewModel.getInvestorProductsData(application)
+            mainViewModel.getInvestorProductsData()
 
             verify { apiUserObserver.onChanged(Result.Loading) }
             assert(mainViewModel.getInvestorProducts().value == Result.Loading)
@@ -76,7 +76,7 @@ class HomeProductsViewModelTest {
                 InvestorProducts(0.0, emptyList())
             )
 
-            mainViewModel.getInvestorProductsData(application)
+            mainViewModel.getInvestorProductsData()
 
             verify { apiUserObserver.onChanged(Result.Success(InvestorProducts(0.0, emptyList()))) }
 
@@ -91,7 +91,7 @@ class HomeProductsViewModelTest {
             mainViewModel.getInvestorProducts().observeForever(apiUserObserver)
             coEvery { mainRepository.getInvestorProducts("Bearer ") } returns Result.Error("Error")
 
-            mainViewModel.getInvestorProductsData(application)
+            mainViewModel.getInvestorProductsData()
 
             verify { apiUserObserver.onChanged(Result.Error("Error")) }
 

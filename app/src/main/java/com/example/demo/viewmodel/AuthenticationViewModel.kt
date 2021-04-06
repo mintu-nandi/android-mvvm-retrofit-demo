@@ -50,7 +50,7 @@ class AuthenticationViewModel @Inject constructor(private val authenticationRepo
     private fun validateForm() {
         val isEmailValid = Pattern.matches(Constants.EMAIL_REGEX_CHARACTERS, email)
         val isPasswordValid = Pattern.matches(Constants.PASSWORD_REGEX_CHARACTERS, password)
-        var isNameValid = true
+        val isNameValid: Boolean
 
         if(isEmailValid && isPasswordValid) {
             _isFieldsValid.postValue(isEmailValid && isPasswordValid)

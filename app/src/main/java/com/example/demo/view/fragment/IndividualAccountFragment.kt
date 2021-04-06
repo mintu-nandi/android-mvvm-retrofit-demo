@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.demo.R
 import com.example.demo.api.status.Result
 import com.example.demo.model.request.OneOffPayment
@@ -15,7 +14,6 @@ import com.example.demo.util.toast
 import com.example.demo.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.individual_account_fragment.*
-import javax.inject.Inject
 
 const val INVESTOR_PRODUCT_ID = "product_id"
 
@@ -24,7 +22,7 @@ class IndividualAccountFragment: Fragment(R.layout.individual_account_fragment) 
 
     private val viewModel: HomeViewModel by viewModels()
 
-    lateinit var product: Product
+    private lateinit var product: Product
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +39,7 @@ class IndividualAccountFragment: Fragment(R.layout.individual_account_fragment) 
     private fun initView(view: View) {
         populateView()
         add.setOnClickListener {
-            viewModel.getPaymentDetailsData(view.context, OneOffPayment(10.0, product.id))
+            viewModel.getPaymentDetailsData(OneOffPayment(10.0, product.id))
         }
     }
 

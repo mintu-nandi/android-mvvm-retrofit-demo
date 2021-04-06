@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 
 object SharedPreferencesUtil {
-    private const val preferencesName = "MoneyBoxPreferences"
+    const val preferencesName = "MoneyBoxPreferences"
     private const val USER_TOKEN = "TOKEN"
     private const val USER_NAME = "USERNAME"
 
     fun sharedPreference(context: Context): SharedPreferences = context.getSharedPreferences(
         preferencesName, Context.MODE_PRIVATE)
 
-    inline fun SharedPreferences.editMe(operation: (SharedPreferences.Editor) -> Unit) {
+    private inline fun SharedPreferences.editMe(operation: (SharedPreferences.Editor) -> Unit) {
         val editMe = edit()
         operation(editMe)
         editMe.apply()
@@ -30,14 +30,6 @@ object SharedPreferencesUtil {
         set(value) {
             editMe {
                 it.putString(USER_NAME, value)
-            }
-        }
-
-    var SharedPreferences.something
-        get() = getString(USER_TOKEN, "")
-        set(value) {
-            editMe {
-                it.putString(USER_TOKEN, value)
             }
         }
 

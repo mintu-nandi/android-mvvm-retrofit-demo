@@ -29,9 +29,9 @@ import kotlinx.android.synthetic.main.accounts_fragment.*
 @AndroidEntryPoint
 class AccountsFragment: Fragment(R.layout.accounts_fragment), OnItemClickListener {
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
     private val viewModel: HomeViewModel by viewModels()
-    lateinit var adapter: HomeAdapter
+    private lateinit var adapter: HomeAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,7 +43,7 @@ class AccountsFragment: Fragment(R.layout.accounts_fragment), OnItemClickListene
 
     override fun onResume() {
         super.onResume()
-        this.context?.let { viewModel.getInvestorProductsData(it) }
+        this.context?.let { viewModel.getInvestorProductsData() }
     }
 
     private fun initView() {

@@ -1,6 +1,6 @@
 package com.example.demo.viewmodel
 
-import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,14 +10,15 @@ import com.example.demo.model.request.OneOffPayment
 import com.example.demo.model.response.InvestorProducts
 import com.example.demo.model.response.PaymentDetails
 import com.example.demo.repository.HomeRepository
-import com.example.demo.util.SharedPreferencesUtil
 import com.example.demo.util.SharedPreferencesUtil.token
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: HomeRepository) :
+class HomeViewModel @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
+    private val repository: HomeRepository) :
     ViewModel() {
 
     private val _products: MutableLiveData<Result<InvestorProducts>> = MutableLiveData()
@@ -26,15 +27,15 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     fun getPaymentDetails(): LiveData<Result<PaymentDetails>> = _payment
     fun getInvestorProducts(): LiveData<Result<InvestorProducts>> = _products
 
-    fun getInvestorProductsData(context: Context) = viewModelScope.launch {
+    fun getInvestorProductsData() = viewModelScope.launch {
         _products.value = Result.Loading
-        _products.value = repository.getInvestorProducts(getToken(context))
+        _products.value = repository.getInvestorProducts(getToken())
     }
 
-    fun getPaymentDetailsData(context: Context, payment: OneOffPayment) = viewModelScope.launch {
+    fun getPaymentDetailsData(payment: OneOffPayment) = viewModelScope.launch {
         _payment.value = Result.Loading
-        _payment.value = repository.getPaymentDetails(getToken(context), payment)
+        _payment.value = repository.getPaymentDetails(getToken(), payment)
     }
 
-    private fun getToken(context: Context) =  "Bearer "+ SharedPreferencesUtil.sharedPreference(context).token
+    private fun getToken() =  "Bearer "+ sharedPreferences.token
 }
