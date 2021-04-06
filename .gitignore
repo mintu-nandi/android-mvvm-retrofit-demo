@@ -1,0 +1,15 @@
+*.iml
+.gradle
+/local.properties
+.DS_Store
+app/build/
+app/captures
+/.idea
+.idea/
+.idea/*
+/Moneybox/.idea
+projectFilesBackup
+.idea/
+.idea/codeStyles/Project.xml
+gradlew
+gradlew.bat
