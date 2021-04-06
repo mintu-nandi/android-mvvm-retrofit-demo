@@ -1,10 +1,19 @@
 
-## Sample API Usage
-This is a brief summary of the api endpoints in the sample sandbox environment.
+## Sample App
+This is mini banking app.
 
-#### Base URL & Test User
-The base URL for the sample sandbox environment.
-You can log into test your app using the following user:
+# Developed Using
+### LiveData.
+### MVVM Architecture.
+### Retrofit2 for Network Requests.
+### Hilt Dependency Injection.
+### Navigation Component.
+### Kotlin Coroutine for Async Programming.
+### Kotin Extentions.
+
+#### Test Account credential
+You can log into this app using the following user details:
+
 
 |  Username          | Password         |
 | ------------- | ------------- |
