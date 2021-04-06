@@ -2,6 +2,7 @@ package com.example.demo.view
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
@@ -27,9 +28,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var viewModel: AuthenticationViewModel
-    @Inject
-    lateinit var viewModelFactory: VMAuthenticationFactory
+    private val viewModel: AuthenticationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +38,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(AuthenticationViewModel::class.java)
-
         et_email.doAfterTextChanged { text -> viewModel.email = text?.toString() ?: "" }
         et_password.doAfterTextChanged { text -> viewModel.password = text?.toString() ?: "" }
         et_name.doAfterTextChanged { text -> viewModel.name = text?.toString() ?: "" }

@@ -3,6 +3,7 @@ package com.example.demo.view.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.demo.R
@@ -11,8 +12,7 @@ import com.example.demo.model.request.OneOffPayment
 import com.example.demo.model.response.PaymentDetails
 import com.example.demo.model.response.Product
 import com.example.demo.util.toast
-import com.example.demo.viewmodel.PaymentDetailsViewModel
-import com.example.demo.viewmodel.factory.VMPaymentDetailsFactory
+import com.example.demo.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.individual_account_fragment.*
 import javax.inject.Inject
@@ -22,9 +22,7 @@ const val INVESTOR_PRODUCT_ID = "product_id"
 @AndroidEntryPoint
 class IndividualAccountFragment: Fragment(R.layout.individual_account_fragment) {
 
-    @Inject
-    lateinit var viewModelFactory: VMPaymentDetailsFactory
-    lateinit var viewModel: PaymentDetailsViewModel
+    private val viewModel: HomeViewModel by viewModels()
 
     lateinit var product: Product
 
@@ -36,8 +34,6 @@ class IndividualAccountFragment: Fragment(R.layout.individual_account_fragment) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(PaymentDetailsViewModel::class.java)
         initView(view)
         initDataObserver()
     }

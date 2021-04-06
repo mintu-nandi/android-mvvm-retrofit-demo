@@ -6,10 +6,10 @@ import com.example.demo.util.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.lifecycle.Observer
 import com.example.demo.api.apiservice.ApiService
-import com.example.demo.api.datasource.InvestorProductsDataSource
+import com.example.demo.api.datasource.HomeDataSource
 import com.example.demo.api.status.Result
 import com.example.demo.model.response.InvestorProducts
-import com.example.demo.repository.InvestorProductsRepository
+import com.example.demo.repository.HomeRepository
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
@@ -23,7 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class InvestorProductsViewModelTest {
+class HomeProductsViewModelTest {
 
     @get:Rule
     val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
@@ -37,12 +37,12 @@ class InvestorProductsViewModelTest {
     @RelaxedMockK
     private lateinit var apiService: ApiService
 
-    private lateinit var mainViewModel: InvestorProductsViewModel
+    private lateinit var mainViewModel: HomeViewModel
 
     @MockK
-    private lateinit var mainDataSource: InvestorProductsDataSource
+    private lateinit var mainDataSource: HomeDataSource
 
-    private lateinit var mainRepository: InvestorProductsRepository
+    private lateinit var mainRepository: HomeRepository
 
     @RelaxedMockK
     private lateinit var apiUserObserver: Observer<Result<InvestorProducts>>
@@ -50,9 +50,9 @@ class InvestorProductsViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        mainDataSource =  spyk(InvestorProductsDataSource(apiService))
-        mainRepository = spyk(InvestorProductsRepository(mainDataSource))
-        mainViewModel = InvestorProductsViewModel(mainRepository)
+        mainDataSource =  spyk(HomeDataSource(apiService))
+        mainRepository = spyk(HomeRepository(mainDataSource))
+        mainViewModel = HomeViewModel(mainRepository)
     }
 
     @Test

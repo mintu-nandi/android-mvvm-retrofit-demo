@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -22,27 +22,21 @@ import com.example.demo.util.toast
 import com.example.demo.view.LoginActivity
 import com.example.demo.view.adapter.HomeAdapter
 import com.example.demo.view.adapter.OnItemClickListener
-import com.example.demo.viewmodel.InvestorProductsViewModel
-import com.example.demo.viewmodel.factory.VMInvestorProductsFactory
+import com.example.demo.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.accounts_fragment.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountsFragment: Fragment(R.layout.accounts_fragment), OnItemClickListener {
 
     lateinit var navController: NavController
-    lateinit var viewModel: InvestorProductsViewModel
+    private val viewModel: HomeViewModel by viewModels()
     lateinit var adapter: HomeAdapter
-    @Inject
-    lateinit var viewModelFactory: VMInvestorProductsFactory
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(InvestorProductsViewModel::class.java)
         initView()
         initDataObserver()
     }

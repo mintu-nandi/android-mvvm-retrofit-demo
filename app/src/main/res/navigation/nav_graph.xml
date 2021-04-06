@@ -21,6 +21,6 @@
         android:label="IndividualAccountFragment">
 
         <argument android:name="recipient"
-            app:argType="com.example.minimoneybox.model.response.Product" />
+            app:argType="com.example.demo.model.response.Product" />
     </fragment>
 </navigation>
